@@ -23,6 +23,7 @@ public class U_USR_MASTERDAL
     private const string SQL_UnblockThisUser = "UPDATE U_USR_Lgn SET Login_status='1' WHERE Usr_Mst_Id = @Usr_Id";
     private const string SQL_SELECT_SingleSubAdmin = "select u.Usr_Id, u.First_Name, u.Last_Name, u.Gender, u.Alt_Email_Id, l.Mobile_Number, l.Login_status, u.Usr_role_Id, m.Media_File_Location, u.Created_Date, u.Updated_Date, u.Created_by, u.Updated_by from U_USR_MASTER as u INNER JOIN U_USR_Lgn as l on u.Usr_Id = l.Usr_Mst_Id INNER JOIN U_ADM_MEDIA_MASTER m on u.Media_Id_Img = m.Media_Id where u.Usr_Id = @Usr_Id";
     private const string SQL_UPDATE_SubAdminProfile = "UPDATE U_USR_MASTER SET First_Name=@First_Name, Last_Name=@Last_Name, Gender=@Gender, usr_role_Id=@Usr_Profile_Id, Media_Id_Img=@Media_Id_Img, Updated_date=@Updated_Date, Updated_by=@Updated_by WHERE Usr_Id=@Usr_Id";
+    private const string SQL_MediaId_Return = "select Media_Id_Img from U_USR_MASTER where Usr_Id = @Usr_Id";
 
     private const string PARAM_Usr_Id = "@Usr_Id";
 	private const string PARAM_First_Name = "@First_Name";
@@ -247,6 +248,29 @@ public class U_USR_MASTERDAL
             return status;
         }
     }
+    
+    public string GetMemberMediaIdDb(string id)
+        {
+            SqlConnection con = null;
+            SqlParameter[] aParms = new SqlParameter[] { new SqlParameter(PARAM_Usr_Id, id) };
+            string MediaId = string.Empty;
+            try
+            {
+                con = General.GetConnection();
+                SqlDataReader reader = SqlHelper.ExecuteReader(con, CommandType.Text, SQL_MediaId_Return, aParms);
+                while (reader.Read())
+                {
+                    MediaId = reader.GetString(0);
+                }
+                reader.Close();
+                return MediaId;
+            }
+            catch (Exception e)
+            {
+                Console.Write(e);
+                return null;
+            }
+        }
 
     public MemberContacts[] GetMemberContactsDb(string id)
     {

@@ -428,6 +428,7 @@ namespace BAGservice.Services
             NewData.Updated_Date = DateTime.Now;
             NewData.Created_by = OldData.Created_by;
             NewData.Updated_by = string.IsNullOrEmpty(usr.Updated_by) ? OldData.Updated_by : usr.Updated_by;
+            NewData.Media_File_Location = string.IsNullOrEmpty(usr.Media_File_Location) ? userDAL.GetMemberMediaIdDb(usr.Usr_Id) : imgData.Media_Id;
 
             NewData1.Usr_Id = NewData.Usr_Id;
             NewData1.First_Name = NewData.First_Name;

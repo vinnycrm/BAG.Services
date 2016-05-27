@@ -18,7 +18,7 @@ public class U_USR_LgnDAL
 	private const string SQL_INSERT_U_USR_Lgn = "INSERT INTO U_USR_Lgn VALUES(@Login_Id, @Usr_Mst_Id, @Email_ID, @Mobile_Number, @Pwd, @Last_Login_Date, @Ip_Address, @Login_status, @Created_Date, @Updated_Date, @Created_by, @Updated_by)";
     private const string SQL_Change_Password = "UPDATE U_USR_Lgn SET Pwd=@Pwd WHERE Usr_Mst_Id = @Usr_Mst_Id AND Pwd=@Login_Id";
     private const string SQL_Reset_Password = "UPDATE U_USR_Lgn SET Pwd=@Pwd WHERE Login_Id=@Login_Id";
-    private const string SQL_Update_Mob_Status = "UPDATE U_USR_Lgn SET Mobile_Number=@Mobile_Number, Login_status@Login_status, Updated_Date=@Updated_Date, Updated_by=@Updated_by WHERE Login_Id=@Login_Id";
+    private const string SQL_Update_Mob_Status = "UPDATE U_USR_Lgn SET Mobile_Number=@Mobile_Number, Login_status=@Login_status, Updated_Date=@Updated_Date, Updated_by=@Updated_by WHERE Login_Id=@Login_Id";
 
     private const string PARAM_Login_Id = "@Login_Id";
 	private const string PARAM_Usr_Mst_Id = "@Usr_Mst_Id";
@@ -254,14 +254,14 @@ public class U_USR_LgnDAL
         }
     }
 
-    public bool UpdateMobileStatusDb(string id,string Mob, int status, DateTime UpDate, string UpBy)
+    public bool UpdateMobileStatusDb(string id, string Mob, int status, DateTime UpDate, string UpBy)
         {
             SqlParameter[] aParms = new SqlParameter[] {
-                new SqlParameter(PARAM_Usr_Mst_Id, id),
+                new SqlParameter(PARAM_Login_Id, id),
                 new SqlParameter(PARAM_Mobile_Number, Mob),
                 new SqlParameter(PARAM_Login_status,status),
                 new SqlParameter(PARAM_Updated_Date,UpDate),
-                new SqlParameter(PARAM_Updated_by,UpBy)};
+                new SqlParameter(PARAM_Updated_by,UpBy)}; 
 
             using (SqlConnection conn = General.GetConnection())
             {
