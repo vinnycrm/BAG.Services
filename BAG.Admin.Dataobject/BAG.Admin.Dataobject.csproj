@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{369CC541-B300-4423-A6C9-6F19C6DFFED8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BAG.Admin.Dataobject</RootNamespace>
+    <AssemblyName>BAG.Admin.Dataobject</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="A_ADM_Coupon_Ref.cs" />
+    <Compile Include="A_ADM_ITEM_MASTER.cs" />
+    <Compile Include="A_ModelGroups.cs" />
+    <Compile Include="A_USR_MASTER.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="U_ADMIN_Login_Ref.cs" />
+    <Compile Include="U_ADM_Coupon_Ref.cs" />
+    <Compile Include="U_ADM_EVNT_Ord_Dtl.cs" />
+    <Compile Include="U_ADM_EVNT_Ord_FulFil_Dtl.cs" />
+    <Compile Include="U_ADM_EVNT_Type.cs" />
+    <Compile Include="U_ADM_ITEM_MASTER.cs" />
+    <Compile Include="U_ADM_MEDIA_MASTER.cs" />
+    <Compile Include="U_ADM_PMT_GtWay_Trans.cs" />
+    <Compile Include="U_ADM_Site_Visitor_Dtl.cs" />
+    <Compile Include="U_ADM_USR_Account_Master.cs" />
+    <Compile Include="U_ADM_USR_Role_Mapping.cs" />
+    <Compile Include="U_ADM_USR_ROLE_MASTER.cs" />
+    <Compile Include="U_EVNT_Attendance.cs" />
+    <Compile Include="U_EVNT_Cntrb_Adj.cs" />
+    <Compile Include="U_EVNT_Cntrb_Dtl.cs" />
+    <Compile Include="U_EVNT_MASTER.cs" />
+    <Compile Include="U_EVNT_Recom_Source.cs" />
+    <Compile Include="U_EVNT_WList_Dtl.cs" />
+    <Compile Include="U_EVNT_WList_INV_Dtl.cs" />
+    <Compile Include="U_EVNT_WList_Pub_Dtl.cs" />
+    <Compile Include="U_USR_Address.cs" />
+    <Compile Include="U_USR_Contacts.cs" />
+    <Compile Include="U_USR_Groups.cs" />
+    <Compile Include="U_USR_Lgn.cs" />
+    <Compile Include="U_USR_Map_Contact.cs" />
+    <Compile Include="U_USR_Map_Usr_To_Contact.cs" />
+    <Compile Include="U_USR_MASTER.cs" />
+    <Compile Include="U_USR_Ord_MASTER.cs" />
+    <Compile Include="U_USR_Tickets.cs" />
+    <Compile Include="U_USR_To_WList_Mapping.cs" />
+    <Compile Include="U_USR_WList.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
