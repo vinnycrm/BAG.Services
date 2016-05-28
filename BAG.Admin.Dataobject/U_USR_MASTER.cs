@@ -74,19 +74,19 @@ public class U_USR_MASTER
 	}
 	private string _Rating;
 
-	public string Address_Id
+	public int Address_Id
 	{ 
 		get { return _Address_Id; }
 		set { _Address_Id = value; }
 	}
-	private string _Address_Id;
+	private int _Address_Id;
 
-	public string Usr_role_Id
+	public int Usr_role_Id
 	{ 
 		get { return _Usr_role_Id; }
 		set { _Usr_role_Id = value; }
 	}
-	private string _Usr_role_Id;
+	private int _Usr_role_Id;
 
 	public string Media_Id_Img
 	{ 
@@ -138,8 +138,8 @@ public class U_USR_MASTER
 		short Is_married, 
 		System.DateTime Wed_anniversary, 
 		string Rating, 
-		string Address_Id, 
-		string Usr_role_Id, 
+		int Address_Id, 
+		int Usr_role_Id, 
 		string Media_Id_Img, 
 		System.DateTime Created_Date, 
 		System.DateTime Updated_Date, 
@@ -187,7 +187,7 @@ public class U_USR_MASTER
             string First_Name,
             string Last_Name,
             string Gender,
-            string Usr_role_Id,
+            int Usr_role_Id,
             string Media_Id_Img,
             DateTime Updated_Date,
             string Updated_by

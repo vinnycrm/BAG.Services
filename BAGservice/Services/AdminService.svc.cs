@@ -77,7 +77,7 @@ namespace BAGservice.Services
 
 
             SubAdmin.MasterData.Usr_Id = System.Guid.NewGuid().ToString();
-            SubAdmin.MasterData.Address_Id = "1";
+            SubAdmin.MasterData.Address_Id = 1;
             SubAdmin.MasterData.Media_Id_Img = imgData.Media_Id;
             SubAdmin.MasterData.Created_Date = DateTime.Now;
             SubAdmin.MasterData.Updated_Date = DateTime.Now;
@@ -265,8 +265,8 @@ namespace BAGservice.Services
             NewData.Is_married = string.IsNullOrEmpty(Convert.ToString(Memb.IsMarried)) ? OldData.IsMarried : Memb.IsMarried;
             NewData.Wed_anniversary = Memb.WedAnvrsry;
             NewData.Rating = "5";
-            NewData.Address_Id = "1";
-            NewData.Usr_role_Id = "3";
+            NewData.Address_Id = 1;
+            NewData.Usr_role_Id = 3;
             NewData.Media_Id_Img = "1";
             NewData.Updated_by = Memb.Updated_By;
             NewData.Created_by = Memb.Updated_By;
@@ -421,7 +421,7 @@ namespace BAGservice.Services
             NewData.Last_Name = string.IsNullOrEmpty(usr.Last_Name) ? OldData.Last_Name : usr.Last_Name;
             NewData.Alt_Email_Id = string.IsNullOrEmpty(usr.Alt_Email_Id) ? OldData.Alt_Email_Id : usr.Alt_Email_Id;
             NewData.Gender = string.IsNullOrEmpty(usr.Gender) ? OldData.Gender : usr.Gender;
-            NewData.Usr_role_Id = string.IsNullOrEmpty(usr.Usr_role_Id) ? OldData.Usr_role_Id : usr.Usr_role_Id;
+            NewData.Usr_role_Id = string.IsNullOrEmpty(Convert.ToString(usr.Usr_role_Id)) ? OldData.Usr_role_Id : usr.Usr_role_Id;
             NewData.Mobile_Number = string.IsNullOrEmpty(usr.Mobile_Number) ? OldData.Mobile_Number : usr.Mobile_Number;
             NewData.Login_status = string.IsNullOrEmpty(Convert.ToString(usr.Login_status)) ? OldData.Login_status : usr.Login_status;
             NewData.Created_Date = OldData.Created_Date;

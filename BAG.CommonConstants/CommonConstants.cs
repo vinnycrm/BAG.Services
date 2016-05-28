@@ -10,7 +10,7 @@ namespace BAG.CommonConstants
     public class General
     {
          public static string SQL_CONN_STRING = @"data source=VINAY-PC\SQLEXPRESS;initial catalog=BAG;persist security info=True;user id=sa;password=sa";
-        // public static string SQL_CONN_STRING = @"Data Source=184.168.194.70;Initial Catalog=BAG;User ID=prayog;Password=p@123456";
+         //public static string SQL_CONN_STRING = @"Data Source=184.168.194.70;Initial Catalog=BAG;User ID=prayog;Password=p@123456";
 
         public static SqlConnection GetConnection()
         {

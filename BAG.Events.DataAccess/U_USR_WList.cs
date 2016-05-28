@@ -126,6 +126,7 @@ public class U_USR_WListDAL
             }
             catch (System.Exception e)
             {
+                Console.Write(e);
                 //lobjError = ManGoErrors.ERROR_CONNECT_TO_DB;
                 //log.Error(lobjError, e);
                 return null;
