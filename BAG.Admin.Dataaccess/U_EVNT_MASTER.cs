@@ -18,10 +18,11 @@ public class U_EVNT_MASTERDAL
     private const string SQL_SELECT_MYEvents_List = "select event_id,event_name,(select count(*) from U_USR_MASTER) as Attendies,(select Media_file_location from u_adm_media_master where media_id=media_id_img) as media_id_img from U_EVNT_MASTER where Event_Creator_Id=@Event_Creator_Id";
     private const string SQL_SELECT_MYInvites_List = "select m.event_id,event_name,(select count(*) from U_USR_MASTER) as Attendies,(select Media_file_location from u_adm_media_master where media_id=media_id_img) as media_id_img from U_EVNT_MASTER m inner join U_EVNT_WList_Pub_Dtl p on m.Event_Id=p.Event_Id where p.Contact_Id=@Event_Creator_Id";
     private const string SQL_SELECT_MediaImageId = "select Media_Id from U_ADM_MEDIA_MASTER m inner join U_ADM_EVNT_Type t on t.Media_Id_Img=m.Media_Id where t.Event_Type_Id=@Event_Type_Id";
-    private const string SQL_SELECT_Event_Details_V2 = "select Event_Id, Event_Name, Event_StartDate, Event_EndDate, Even_Location from U_EVNT_MASTER";
-    private const string SQL_Event_Detail = "select eve.Event_Id, eve.Event_Name, eve.Even_Location, eve.Event_Desc, eve.Event_StartDate, eve.Event_EndDate, usr.First_Name, usr.Last_Name, eve.COMMENTS, img.Media_File_Location, eve.Updated_by from U_EVNT_MASTER as eve INNER JOIN U_USR_MASTER usr on eve.Event_Creator_Id = usr.Usr_Id INNER JOIN U_ADM_MEDIA_MASTER img on eve.Media_Id_Img = img.Media_Id WHERE eve.Event_Id=@Event_Id";
+    private const string SQL_SELECT_Event_Details_V2 = "select Event_Id, Event_Name, Event_StartDate, Event_EndDate, Even_Location, Event_Status from U_EVNT_MASTER";
+    private const string SQL_Event_Detail = "select eve.Event_Id, eve.Event_Name, eve.Even_Location, eve.Event_Desc, eve.Event_StartDate, eve.Event_EndDate, eve.Event_Status, usr.First_Name, usr.Last_Name, eve.COMMENTS, img.Media_File_Location, eve.Updated_by from U_EVNT_MASTER as eve INNER JOIN U_USR_MASTER usr on eve.Event_Creator_Id = usr.Usr_Id INNER JOIN U_ADM_MEDIA_MASTER img on eve.Media_Id_Img = img.Media_Id WHERE eve.Event_Id=@Event_Id";
     private const string SQL_Event_WishList = "select WList_Id, WList_Name from U_USR_WList where Event_Id = @Event_Id";
     private const string SQL_UPDATE_Event = "UPDATE U_EVNT_MASTER SET Event_Name=@Event_Name, Event_Desc=@Event_Desc, Event_StartDate=@Event_StartDate, Event_EndDate=@Event_EndDate, Even_Location=@Even_Location, Event_Status=@Event_Status, Media_Id_Img=@Media_Id_Img, Updated_Date=@Updated_Date, Updated_by=@Updated_by WHERE Event_Id =@Event_Id";
+    private const string SQL_MediaId_Return = "SELECT Media_Id_Img FROM U_EVNT_MASTER WHERE EVENT_ID = @Event_Id";
 
     private const string PARAM_Event_Id = "@Event_Id";
 	private const string PARAM_Event_Creator_Id = "@Event_Creator_Id";
@@ -52,7 +53,7 @@ public class U_EVNT_MASTERDAL
                 SqlDataReader reader = SqlHelper.ExecuteReader(con, CommandType.Text, SQL_SELECT_Event_Details_V2);
                 while (reader.Read())
                 {
-                    Events.Add(new U_EVNT_MASTER(reader.GetString(0), null, null, reader.GetString(1), null, reader.GetDateTime(2), reader.GetDateTime(3), reader.GetString(4), null, null, null, tempDate, tempDate, null, null));
+                    Events.Add(new U_EVNT_MASTER(reader.GetString(0), null, null, reader.GetString(1), null, reader.GetDateTime(2), reader.GetDateTime(3), reader.GetString(4), reader.GetString(5), null, null, tempDate, tempDate, null, null));
                 }
                 reader.Close();
                 return Events.ToArray();
@@ -118,10 +119,11 @@ public class U_EVNT_MASTERDAL
                     aEvent.Event_Desc = reader.GetString(3);
                     aEvent.Event_StartDate = reader.GetDateTime(4);
                     aEvent.Event_EndDate = reader.GetDateTime(5);
-                    aEvent.Event_Organizer = reader.GetString(6) + " " + reader.GetString(7);
-                    aEvent.Event_TotalComments = reader.GetString(8);
-                    aEvent.Event_PicUrl = reader.GetString(9);
-                    aEvent.Event_Update_by = reader.GetString(10);
+                    aEvent.Event_Status = reader.GetString(6);
+                    aEvent.Event_Organizer = reader.GetString(7) + " " + reader.GetString(8);
+                    aEvent.Event_TotalComments = reader.GetString(9);
+                    aEvent.Event_PicUrl = reader.GetString(10);
+                    aEvent.Event_Update_by = reader.GetString(11);
                 }
                 reader.Close();
                 return aEvent;
@@ -187,6 +189,29 @@ public class U_EVNT_MASTERDAL
                     }
                 }
                 return status;
+            }
+        }
+    
+    public string GetEventMediaIdDb(string id)
+        {
+            SqlConnection con = null;
+            SqlParameter[] aParms = new SqlParameter[] { new SqlParameter(PARAM_Event_Id, id) };
+            string MediaId = string.Empty;
+            try
+            {
+                con = General.GetConnection();
+                SqlDataReader reader = SqlHelper.ExecuteReader(con, CommandType.Text, SQL_MediaId_Return, aParms);
+                while (reader.Read())
+                {
+                    MediaId = reader.GetString(0);
+                }
+                reader.Close();
+                return MediaId;
+            }
+            catch (Exception e)
+            {
+                Console.Write(e);
+                return null;
             }
         }
 

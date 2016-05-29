@@ -22,11 +22,20 @@ namespace BAG.Admin.Dataobject
             set { _UserName = value; }
         }
 
+        public string ProfilePic
+        {
+            get { return _ProfilePic; }
+            set { _ProfilePic = value; }
+        }
+        private string _ProfilePic;
+
         public U_ADMIN_Login_Ref() { }
-        public U_ADMIN_Login_Ref(string uid, string uname)
+
+        public U_ADMIN_Login_Ref(string uid, string uname, string ProfilePic)
         {
             _UserId = uid;
             _UserName = uname;
+            _ProfilePic = ProfilePic;
         }
 
     }

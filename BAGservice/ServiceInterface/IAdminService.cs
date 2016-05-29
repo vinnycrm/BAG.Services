@@ -60,7 +60,7 @@ namespace BAGservice.ServiceInterface
             RequestFormat = WebMessageFormat.Json,
             ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "EventsDetails")]
-        U_EVNT_MASTER[] GetEventsDetailsDb();
+        U_EVNT_MASTER[] GetEventsDetails();
 
         [OperationContract]
         [WebInvoke(Method = "POST",

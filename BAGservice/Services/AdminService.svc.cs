@@ -21,7 +21,7 @@ namespace BAGservice.Services
             return data;
         }
 
-        public U_EVNT_MASTER[] GetEventsDetailsDb()
+        public U_EVNT_MASTER[] GetEventsDetails()
         {
             U_EVNT_MASTERDAL obj = new U_EVNT_MASTERDAL();
             var data = obj.GetEventsDetailsDb();
@@ -266,7 +266,7 @@ namespace BAGservice.Services
             NewData.Wed_anniversary = Memb.WedAnvrsry;
             NewData.Rating = "5";
             NewData.Address_Id = 1;
-            NewData.Usr_role_Id = 3;
+            NewData.Usr_role_Id = "3";
             NewData.Media_Id_Img = "1";
             NewData.Updated_by = Memb.Updated_By;
             NewData.Created_by = Memb.Updated_By;
@@ -285,7 +285,7 @@ namespace BAGservice.Services
             U_ADM_MEDIA_MASTER imgData = new U_ADM_MEDIA_MASTER();
 
             OldData = ItemDAL.SelectItemDetailsDb(item.Item_ID);
-            if (!(item.Item_PicUrl == "/img/default_product.png"))
+            if (!(item.Item_PicUrl == "/img/default_product.png") && !(string.IsNullOrEmpty(item.Item_PicUrl)))
             {
                 imgData.Media_Id = Guid.NewGuid().ToString();
                 imgData.Media_Type = "Image";
@@ -301,7 +301,7 @@ namespace BAGservice.Services
             }
             else
             {
-                NewData.Media_Id_Img = item.Item_PicUrl;
+                NewData.Media_Id_Img = OldData.Media_Id_Img;
             }
             NewData.Item_Id = item.Item_ID;
             NewData.Item_Name = string.IsNullOrEmpty(item.Item_Name) ? OldData.Item_Name : item.Item_Name;
@@ -351,7 +351,7 @@ namespace BAGservice.Services
 
             OldData = couDAL.GetSingleCouponDetailDb(cou.Coupon_id);
 
-            if (!(cou.Coupon_PicUrl == "/img/no-image.gif") && !(OldData.Coupon_PicUrl == "/img/no-image.gif"))
+            if (!(string.IsNullOrEmpty(cou.Coupon_PicUrl)))
             {
                 imgData.Media_Id = Guid.NewGuid().ToString();
                 imgData.Media_Type = "Image";
@@ -364,6 +364,10 @@ namespace BAGservice.Services
                 imgData.Updated_Date = DateTime.Now;
                 ImgDAL.InsertU_ADM_MEDIA_MASTER(imgData);
                 NewData.Coupon_PicUrl = imgData.Media_Id;
+            }
+            else
+            {
+                NewData.Coupon_PicUrl = couDAL.GetCouponMediaIdDb(cou.Coupon_id);
             }
             NewData.Coupon_id = cou.Coupon_id;
             NewData.Coupon_Name = string.IsNullOrEmpty(cou.Coupon_Name) ? OldData.Coupon_Name : cou.Coupon_Name;
@@ -401,7 +405,7 @@ namespace BAGservice.Services
 
             var OldData = userDAL.GetSingleSubAdminDetailsDb(usr.Usr_Id);
 
-            if (!(usr.Media_File_Location == "/img/default_ProfilePicture.jpg") && !(string.IsNullOrEmpty(usr.Media_File_Location)))
+            if (!(string.IsNullOrEmpty(usr.Media_File_Location)))
             {
                 imgData.Media_Id = Guid.NewGuid().ToString();
                 imgData.Media_Type = "Image";
@@ -414,6 +418,10 @@ namespace BAGservice.Services
                 imgData.Updated_Date = DateTime.Now;
                 ImgDAL.InsertU_ADM_MEDIA_MASTER(imgData);
                 NewData.Media_File_Location = imgData.Media_Id;
+            }
+            else
+            {
+                NewData.Media_File_Location = userDAL.GetMemberMediaIdDb(usr.Usr_Id);
             }
 
             NewData.Usr_Id = usr.Usr_Id;
@@ -428,7 +436,6 @@ namespace BAGservice.Services
             NewData.Updated_Date = DateTime.Now;
             NewData.Created_by = OldData.Created_by;
             NewData.Updated_by = string.IsNullOrEmpty(usr.Updated_by) ? OldData.Updated_by : usr.Updated_by;
-            NewData.Media_File_Location = string.IsNullOrEmpty(usr.Media_File_Location) ? userDAL.GetMemberMediaIdDb(usr.Usr_Id) : imgData.Media_Id;
 
             NewData1.Usr_Id = NewData.Usr_Id;
             NewData1.First_Name = NewData.First_Name;
@@ -483,6 +490,7 @@ namespace BAGservice.Services
             NewEveObj.Created_Date = DateTime.Now; //do nothing
             NewEveObj.Updated_Date = DateTime.Now;
             NewEveObj.Updated_by = eve.Event_Update_by;
+            NewEveObj.Media_Id_Img = string.IsNullOrEmpty(eve.Event_PicUrl) ? eveDAL.GetEventMediaIdDb(eve.Event_id) : imgData.Media_Id;
 
             return eveDAL.Update_EventDetailsDb(NewEveObj);
         }

@@ -14,7 +14,7 @@ public class U_USR_LgnDAL
     private const string SQL_Check_Email_Id = "SELECT Login_Id FROM U_USR_Lgn WHERE Email_ID = @Email_ID";
     private const string SQL_Check_Login_Id = "SELECT m.Usr_Id FROM U_USR_MASTER m inner join U_USR_Lgn l on m.Usr_Id=l.Usr_Mst_Id WHERE l.Login_Id = @Login_Id";
     private const string SQL_Activate_Member = "UPDATE U_USR_Lgn SET Login_status='1' WHERE Login_Id = @Login_Id";
-    private const string SQL_Select_Login_Details = "SELECT m.Usr_Id,m.First_Name FROM U_USR_Lgn l inner join U_USR_MASTER m on l.Usr_Mst_Id=m.Usr_Id WHERE l.Email_ID = @Email_ID AND l.Pwd=@Pwd";
+    private const string SQL_Select_Login_Details = "SELECT m.Usr_Id, m.First_Name, img.Media_File_Location FROM U_USR_Lgn l inner join U_USR_MASTER m on l.Usr_Mst_Id=m.Usr_Id inner join U_ADM_MEDIA_MASTER img on img.Media_Id = m.Media_Id_Img WHERE l.Email_ID = @Email_ID AND l.Pwd=@Pwd";
 	private const string SQL_INSERT_U_USR_Lgn = "INSERT INTO U_USR_Lgn VALUES(@Login_Id, @Usr_Mst_Id, @Email_ID, @Mobile_Number, @Pwd, @Last_Login_Date, @Ip_Address, @Login_status, @Created_Date, @Updated_Date, @Created_by, @Updated_by)";
     private const string SQL_Change_Password = "UPDATE U_USR_Lgn SET Pwd=@Pwd WHERE Usr_Mst_Id = @Usr_Mst_Id AND Pwd=@Login_Id";
     private const string SQL_Reset_Password = "UPDATE U_USR_Lgn SET Pwd=@Pwd WHERE Login_Id=@Login_Id";
@@ -164,7 +164,8 @@ public class U_USR_LgnDAL
                 {
                     return new U_ADMIN_Login_Ref(
                             reader.GetString(0),
-                            reader.GetString(1));
+                            reader.GetString(1),
+                            reader.GetString(2));
                 }
                 reader.Close();
                 return null;

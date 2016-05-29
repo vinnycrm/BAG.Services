@@ -43,12 +43,12 @@ namespace BAG.Admin.Dataobject
         }
         private string _Gender;
 
-        public int Usr_role_Id
+        public string Usr_role_Id
         {
             get { return _Usr_role_Id; }
             set { _Usr_role_Id = value; }
         }
-        private int _Usr_role_Id;
+        private string _Usr_role_Id;
 
         public string Mobile_Number
         {
@@ -107,7 +107,7 @@ namespace BAG.Admin.Dataobject
             string Last_Name,
             string Alt_Email_Id,
             string Gender,
-            int Usr_role_Id,
+            string Usr_role_Id,
             string Mobile_Number,
             int Login_status,
             string Media_File_Location,

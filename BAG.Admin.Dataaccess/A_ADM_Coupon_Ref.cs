@@ -18,6 +18,7 @@ namespace BAG.Admin.Dataaccess
         private const string SQL_Block_Coupon = "UPDATE U_ADM_Coupon_Ref SET Coupon_Status = '0' WHERE Coupon_ID = @Coupon_ID";
         private const string SQL_Unblock_Coupon = "UPDATE U_ADM_Coupon_Ref SET Coupon_Status = '1' WHERE Coupon_ID = @Coupon_ID";
         private const string SQL_UpdateCoupon = "UPDATE U_ADM_Coupon_Ref SET Coupon_Name=@Coupon_Name, Coupon_VendorName=@Coupon_VendorName, Coupon_Desc=@Coupon_Desc, Coupon_StartDate=@Coupon_StartDate, Coupon_EndDate=@Coupon_EndDate, Coupon_Status=@Coupon_Status, Media_Id_Img=@Media_Id_Img, Created_Date=@Created_Date, Updated_Date=@Updated_Date, Created_by=@Created_by, Updated_by=@Updated_by where Coupon_ID=@Coupon_ID";
+        private const string SQL_MediaId_Return = "select Media_Id_Img from U_ADM_Coupon_Ref WHERE Coupon_ID = @Coupon_ID";
 
         private const string PARAM_Coupon_ID = "@Coupon_ID";
         private const string PARAM_Coupon_Name = "@Coupon_Name";
@@ -203,6 +204,29 @@ namespace BAG.Admin.Dataaccess
                     }
                 }
                 return status;
+            }
+        }
+
+        public string GetCouponMediaIdDb(string id)
+        {
+            SqlConnection con = null;
+            SqlParameter[] aParms = new SqlParameter[] { new SqlParameter(PARAM_Coupon_ID, id) };
+            string MediaId = string.Empty;
+            try
+            {
+                con = General.GetConnection();
+                SqlDataReader reader = SqlHelper.ExecuteReader(con, CommandType.Text, SQL_MediaId_Return, aParms);
+                while (reader.Read())
+                {
+                    MediaId = reader.GetString(0);
+                }
+                reader.Close();
+                return MediaId;
+            }
+            catch (Exception e)
+            {
+                Console.Write(e);
+                return null;
             }
         }
 

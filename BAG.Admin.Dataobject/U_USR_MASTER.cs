@@ -81,12 +81,12 @@ public class U_USR_MASTER
 	}
 	private int _Address_Id;
 
-	public int Usr_role_Id
+	public string Usr_role_Id
 	{ 
 		get { return _Usr_role_Id; }
 		set { _Usr_role_Id = value; }
 	}
-	private int _Usr_role_Id;
+	private string _Usr_role_Id;
 
 	public string Media_Id_Img
 	{ 
@@ -139,7 +139,7 @@ public class U_USR_MASTER
 		System.DateTime Wed_anniversary, 
 		string Rating, 
 		int Address_Id, 
-		int Usr_role_Id, 
+		string Usr_role_Id, 
 		string Media_Id_Img, 
 		System.DateTime Created_Date, 
 		System.DateTime Updated_Date, 
@@ -187,7 +187,7 @@ public class U_USR_MASTER
             string First_Name,
             string Last_Name,
             string Gender,
-            int Usr_role_Id,
+            string Usr_role_Id,
             string Media_Id_Img,
             DateTime Updated_Date,
             string Updated_by

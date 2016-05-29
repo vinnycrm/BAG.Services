@@ -318,7 +318,7 @@ public class U_USR_MASTERDAL
                     member.Alt_Email_Id = reader.GetString(4);
                     member.Mobile_Number = reader.GetString(5);
                     member.Login_status = reader.GetInt32(6);
-                    member.Usr_role_Id = reader.GetInt32(7);
+                    member.Usr_role_Id = reader.GetString(7);
                     member.Media_File_Location = reader.GetString(8);
                     member.Created_Date = reader.GetDateTime(9);
                     member.Updated_Date = reader.GetDateTime(10);
