@@ -494,5 +494,35 @@ namespace BAGservice.Services
 
             return eveDAL.Update_EventDetailsDb(NewEveObj);
         }
+
+        public string GetMembersCount()
+        {
+            U_USR_MASTERDAL memDAL = new U_USR_MASTERDAL();
+            return memDAL.GetMembersCountDb();
+        }
+
+        public string GetEventsCount()
+        {
+            U_EVNT_MASTERDAL EveDAL = new U_EVNT_MASTERDAL();
+            return EveDAL.GetEventsCountDb();
+        }
+
+        public string GetItemsCount()
+        {
+            A_ADM_ITEM_MASTERDAL ItemDAL = new A_ADM_ITEM_MASTERDAL();
+            return ItemDAL.GetItemsCountDb();
+        }
+
+        public DashboardMember[] GetRecent5Membors()
+        {
+            U_USR_MASTERDAL memDAL = new U_USR_MASTERDAL();
+            return memDAL.GetRecent5MemborsDb();
+        }
+
+        public DashboardEvents[] GetRecent5Events()
+        {
+            U_EVNT_MASTERDAL EveDAL = new U_EVNT_MASTERDAL();
+            return EveDAL.GetRecent5EventsDb();
+        }
     }
 }

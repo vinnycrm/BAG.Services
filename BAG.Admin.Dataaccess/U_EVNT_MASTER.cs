@@ -23,6 +23,8 @@ public class U_EVNT_MASTERDAL
     private const string SQL_Event_WishList = "select WList_Id, WList_Name from U_USR_WList where Event_Id = @Event_Id";
     private const string SQL_UPDATE_Event = "UPDATE U_EVNT_MASTER SET Event_Name=@Event_Name, Event_Desc=@Event_Desc, Event_StartDate=@Event_StartDate, Event_EndDate=@Event_EndDate, Even_Location=@Even_Location, Event_Status=@Event_Status, Media_Id_Img=@Media_Id_Img, Updated_Date=@Updated_Date, Updated_by=@Updated_by WHERE Event_Id =@Event_Id";
     private const string SQL_MediaId_Return = "SELECT Media_Id_Img FROM U_EVNT_MASTER WHERE EVENT_ID = @Event_Id";
+    private const string SQL_Events_Count = "select COUNT(*) from U_EVNT_MASTER";
+    private const string SQL_SELECT_TOP5_U_EVNT_MASTER = "SELECT TOP 5 eve.Event_Id, eve.Event_Name, usr.First_Name, usr.Last_Name, eve.Created_Date FROM U_EVNT_MASTER eve INNER JOIN U_USR_MASTER usr ON eve.Event_Creator_Id = usr.Usr_Id ORDER BY Created_Date DESC";
 
     private const string PARAM_Event_Id = "@Event_Id";
 	private const string PARAM_Event_Creator_Id = "@Event_Creator_Id";
@@ -214,6 +216,60 @@ public class U_EVNT_MASTERDAL
                 return null;
             }
         }
+    
+    public string GetEventsCountDb()
+    {
+        SqlConnection con = null;
+            
+        string EventCount = string.Empty;
+        try
+        {
+            con = General.GetConnection();
+            SqlDataReader reader = SqlHelper.ExecuteReader(con, CommandType.Text, SQL_Events_Count);
+            while (reader.Read())
+            {
+                EventCount = Convert.ToString(reader.GetInt32(0));
+            }
+            reader.Close();
+            return EventCount;
+        }
+        catch (Exception e)
+        {
+            Console.Write(e);
+            return null;
+        }
+    }
+
+    public DashboardEvents[] GetRecent5EventsDb()
+    {
+        SqlConnection con = null;
+        List<DashboardEvents> eveDetails = new List<DashboardEvents>();
+        try
+        {
+            con = General.GetConnection();
+            SqlDataReader reader = SqlHelper.ExecuteReader(con, CommandType.Text, SQL_SELECT_TOP5_U_EVNT_MASTER);
+            while (reader.Read())
+            {
+                eveDetails.Add(new DashboardEvents(
+                    reader.GetString(0),
+                    reader.GetString(1),
+                    reader.GetString(2) + " " + reader.GetString(3),
+                    reader.GetDateTime(4)));
+            }
+            reader.Close();
+            return eveDetails.ToArray();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return null;
+        }
+        finally
+        {
+            if (con != null)
+                con.Dispose();
+        }
+    }
 
     private SqlParameter[] GetParameters(U_EVNT_MASTER tobjU_EVNT_MASTER)
 	{

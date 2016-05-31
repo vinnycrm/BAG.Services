@@ -24,6 +24,8 @@ public class U_USR_MASTERDAL
     private const string SQL_SELECT_SingleSubAdmin = "select u.Usr_Id, u.First_Name, u.Last_Name, u.Gender, u.Alt_Email_Id, l.Mobile_Number, l.Login_status, u.Usr_role_Id, m.Media_File_Location, u.Created_Date, u.Updated_Date, u.Created_by, u.Updated_by from U_USR_MASTER as u INNER JOIN U_USR_Lgn as l on u.Usr_Id = l.Usr_Mst_Id INNER JOIN U_ADM_MEDIA_MASTER m on u.Media_Id_Img = m.Media_Id where u.Usr_Id = @Usr_Id";
     private const string SQL_UPDATE_SubAdminProfile = "UPDATE U_USR_MASTER SET First_Name=@First_Name, Last_Name=@Last_Name, Gender=@Gender, usr_role_Id=@Usr_Profile_Id, Media_Id_Img=@Media_Id_Img, Updated_date=@Updated_Date, Updated_by=@Updated_by WHERE Usr_Id=@Usr_Id";
     private const string SQL_MediaId_Return = "select Media_Id_Img from U_USR_MASTER where Usr_Id = @Usr_Id";
+    private const string SQL_Members_Count = "select COUNT(*) from U_USR_MASTER";
+    private const string SQL_SELECT_TOP_5_MEMBERS = "SELECT TOP 5 Usr_Id, First_Name, Last_Name, Alt_Email_Id, Created_Date FROM U_USR_MASTER where Usr_role_Id = '3' ORDER BY Created_Date desc";
 
     private const string PARAM_Usr_Id = "@Usr_Id";
 	private const string PARAM_First_Name = "@First_Name";
@@ -361,6 +363,60 @@ public class U_USR_MASTERDAL
             return status;
         }
     }
+    
+    public string GetMembersCountDb()
+        {
+            SqlConnection con = null;
+            
+            string MembCount = string.Empty;
+            try
+            {
+                con = General.GetConnection();
+                SqlDataReader reader = SqlHelper.ExecuteReader(con, CommandType.Text, SQL_Members_Count);
+                while (reader.Read())
+                {
+                    MembCount = Convert.ToString(reader.GetInt32(0));
+                }
+                reader.Close();
+                return MembCount;
+            }
+            catch (Exception e)
+            {
+                Console.Write(e);
+                return null;
+            }
+        }
+
+    public DashboardMember[] GetRecent5MemborsDb()
+    {
+            SqlConnection con = null;
+            List<DashboardMember> memDetails = new List<DashboardMember>();
+            try
+            {
+                con = General.GetConnection();
+                SqlDataReader reader = SqlHelper.ExecuteReader(con, CommandType.Text, SQL_SELECT_TOP_5_MEMBERS);
+                while (reader.Read())
+                {
+                    memDetails.Add(new DashboardMember(
+                        reader.GetString(0), 
+                        reader.GetString(1) + " " + reader.GetString(2), 
+                        reader.GetString(3), 
+                        reader.GetDateTime(4)));
+                }
+                reader.Close();
+                return memDetails.ToArray();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
+            finally
+            {
+                if (con != null)
+                    con.Dispose();
+            }
+        }
 
     private SqlParameter[] GetParameters(U_USR_MASTER tobjU_USR_MASTER)
 	{

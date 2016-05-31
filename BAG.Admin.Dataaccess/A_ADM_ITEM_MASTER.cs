@@ -21,6 +21,7 @@ namespace BAG.Admin.Dataaccess
         private const string SQL_BlockThisItem = "UPDATE U_ADM_ITEM_MASTER SET Item_Status='0' WHERE Item_Id=@Item_Id";
         private const string SQL_UnblockThisItem = "UPDATE U_ADM_ITEM_MASTER SET Item_Status='1' WHERE Item_Id=@Item_Id";
         private const string SQL_UPDATE_U_ADM_ITEM_MASTER = "Update U_ADM_ITEM_MASTER SET Item_Name=@Item_Name, Item_Desc=@Item_Desc, Item_Status=@Item_Status, Item_Tentative_Cost=@Item_Tentative_Cost, Item_Source=@Item_Source, Media_Id_Img=@Media_Id_Img, Media_Id_Video=@Media_Id_Video, Created_Date=@Created_Date, Updated_Date=@Updated_Date, Created_by=@Created_by, Updated_by=@Updated_by where Item_Id=@Item_Id";
+        private const string SQL_Items_Count = "select COUNT(*) from U_ADM_ITEM_MASTER";
 
         private const string PARAM_Item_Id = "@Item_Id";
         private const string PARAM_Item_Name = "@Item_Name";
@@ -235,6 +236,29 @@ namespace BAG.Admin.Dataaccess
                     }
                 }
                 return status;
+            }
+        }
+
+        public string GetItemsCountDb()
+        {
+            SqlConnection con = null;
+
+            string ItemsCount = string.Empty;
+            try
+            {
+                con = General.GetConnection();
+                SqlDataReader reader = SqlHelper.ExecuteReader(con, CommandType.Text, SQL_Items_Count);
+                while (reader.Read())
+                {
+                    ItemsCount = Convert.ToString(reader.GetInt32(0));
+                }
+                reader.Close();
+                return ItemsCount;
+            }
+            catch (Exception e)
+            {
+                Console.Write(e);
+                return null;
             }
         }
 

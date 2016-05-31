@@ -215,5 +215,40 @@ namespace BAGservice.ServiceInterface
             ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "UpdateEvent")]
         Int32 GetUpdateEvent(Event eve);
+
+        [OperationContract]
+        [WebGet(
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "MembersCount")]
+         string GetMembersCount();
+
+        [OperationContract]
+        [WebGet(
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "EventsCount")]
+        string GetEventsCount();
+
+        [OperationContract]
+        [WebGet(
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "ItemsCount")]
+        string GetItemsCount();
+
+        [OperationContract]
+        [WebGet(
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "Recent5Membors")]
+        DashboardMember[] GetRecent5Membors();
+
+        [OperationContract]
+        [WebGet(
+            RequestFormat = WebMessageFormat.Json,
+            ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "Recent5Events")]
+        DashboardEvents[] GetRecent5Events();
     }
 }

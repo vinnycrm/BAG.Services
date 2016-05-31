@@ -41,6 +41,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Coupons.cs" />
+    <Compile Include="DashboardEvents.cs" />
+    <Compile Include="DashboardMember.cs" />
     <Compile Include="Event.cs" />
     <Compile Include="EventsWishList.cs" />
     <Compile Include="Groups.cs" />
